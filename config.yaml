@@ -1,0 +1,39 @@
+streams:
+
+# example config for transcoding (WebSocket -> H265 -> MPEG1 -> WebSocket)
+- source:
+    type: "ws"                    # source type, available options: ws, wsmux (single connection multiple streams), v4l2
+    uri: "ws://127.0.0.1:8766"    # (ws only) uri to connect to
+
+  decoder:
+    type: "h265"                  # decoder type, available options: none, h265, h264
+
+  encoder:
+    type: "mpeg1sw"               # encoder type, available options: h265, h264, h264cb (for Broadway.js), mpeg1sw (for JSmpeg)
+    bitrate: 3000                 # (optional) bitrate in kbps
+    tsmux_alignment: 30           # (mpeg1 only) tsmux alignment
+  
+  sink:
+    type: "ws"                    # sink type, available options: ws, wsmux, v4l2, fake
+    host: "0.0.0.0"               # (ws only) host to listen on
+    port: 8765                    # (ws only) port to listen on
+
+# example config for camera video capture (V4L2 -> H265 -> WebSocket)
+- source:
+    type: "v4l2"                  # source type, available options: ws, wsmux, v4l2
+    device: "/dev/video0"
+    width: 1280                   # (v4l2 only) v4l2 image width to request
+    height: 720                   # (v4l2 only) v4l2 image height to request
+    fps: 30                       # (v4l2 only) v4l2 fps to request
+  
+  decoder:
+    type: "none"
+  
+  encoder:
+    type: "h265"
+    bitrate: 3000
+  
+  sink:
+    type: "ws"
+    host: "0.0.0.0"
+    port: 8766
