@@ -1,0 +1,20 @@
+# example config for transcoding (WebSocket -> H265 -> MPEG1 -> WebSocket)
+
+streams:
+- source:
+    type: "ws"                    # source type, available options: ws, wsmux (single connection multiple streams), v4l2
+    uri: "ws://127.0.0.1:8765"    # (ws only) uri to connect to
+
+  decoder:
+    type: "h265"                  # decoder type, available options: none, h265, h264
+
+  encoder:
+    type: "mpeg1sw"               # encoder type, available options: h265, h264, h264cb (for Broadway.js), mpeg1sw (for JSmpeg)
+    bitrate: 3000                 # (optional) bitrate in kbps
+    tsmux_alignment: 30           # (mpeg1 only) tsmux alignment
+  
+  sink:
+    type: "ws"                    # sink type, available options: ws, wsmux, v4l2, fake
+    host: "0.0.0.0"               # (ws only) host to listen on
+    port: 8766                    # (ws only) port to listen on
+    queue_size: 10
