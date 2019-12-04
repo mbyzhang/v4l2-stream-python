@@ -9,3 +9,12 @@ $ sudo apt install python3 python3-pip python3-yaml gstreamer1.0-libav gstreamer
 $ pip3 install -r requirements.txt
 $ python3 main.py
 ```
+
+and in another Terminal
+
+```
+$ cd v4l2-stream-python/jsmpeg
+$ python3 -m http.server
+```
+
+and open http://localhost:8000/view-stream.html in your browser.
